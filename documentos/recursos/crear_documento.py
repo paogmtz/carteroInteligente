@@ -91,6 +91,17 @@ table.rows[0].cells[0].text='Componente'; table.rows[0].cells[1].text='Definici�
 records=[('Estado inicial','(10, {10}). El cartero empieza en el Palacio de Correos y el nodo 10 ya cuenta como visitado.'),('Estados','(actual, visitados): destino actual y conjunto de destinos ya atendidos. Estar en el mismo nodo con diferentes visitados son estados distintos.'),('Acciones','Moverse a un destino pendiente y añadirlo a visitados. La estrategia actual termina primero los pendientes de la zona donde se encuentra.'),('Estado meta','Haber visitado los 20 nodos. Puede terminar en cualquier destino; la ruta actual acaba en 18.'),('Función de costo','Sumar las distancias Manhattan de cada salto: |fila1 − fila2| + |columna1 − columna2|. Son unidades relativas de la matriz.'),('Restricciones','Inicio en 10; todos los destinos deben visitarse. El código elige cada destino una vez. Los ceros son espacios vacíos; no modelamos calles, obstáculos, tráfico ni sentidos de circulación.')]
 for a,b in records:
     cells=table.add_row().cells; cells[0].text=a; cells[1].text=b
+# Mantener iguales los anchos de encabezado, celdas y columnas en Word.
+tbl_width = table._tbl.tblPr.find(qn('w:tblW'))
+tbl_width.set(qn('w:type'), 'dxa')
+tbl_width.set(qn('w:w'), '10080')
+tbl_indent = OxmlElement('w:tblInd')
+tbl_indent.set(qn('w:w'), '0')
+tbl_indent.set(qn('w:type'), 'dxa')
+table._tbl.tblPr.append(tbl_indent)
+for row in table.rows:
+    for cell, width in zip(row.cells, [1.45, 5.55]):
+        cell.width = Inches(width)
 for i,row in enumerate(table.rows):
     for c in row.cells:
         pr=c._tc.get_or_add_tcPr(); shade=OxmlElement('w:shd'); shade.set(qn('w:fill'),'DCE6F1' if i==0 else ('F5F7FA' if i%2 else 'FFFFFF')); pr.append(shade)
