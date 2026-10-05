@@ -1,0 +1,11 @@
+.DS_Store
+.idea/
+__pycache__/
+*.py[cod]
+~$*
+
+# Archivos temporales de revisión del documento
+documentos/recursos/contacto.png
+documentos/recursos/render/
+documentos/recursos/revision/
+documentos/recursos/final/
